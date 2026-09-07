@@ -1,1 +1,27 @@
+name: Android Build
 
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar código
+        uses: actions/checkout@v4
+
+      - name: Configurar Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Dar permisos a Gradle
+        run: chmod +x gradlew
+
+      - name: Compilar aplicación
+        run: ./gradlew assembleDebug
